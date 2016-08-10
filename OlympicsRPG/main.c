@@ -40,7 +40,7 @@ void newGame() {
     int score = 0;
     int eventCounter = 0;
     
-    char eventsList[] = "\nSwim (1\nGymnastics (bar) (2\nArchery (3\nSkating(4\nTrack (5\nFencing (6\n";
+    char eventsList[] = "\nSwim (1\nGymnastics (bar) (2\nArchery (3\nSkating(4\nTrack (5\nFencing (6\nEnter chosen: ";
     
     while(eventCounter < 6) {
         
@@ -125,7 +125,7 @@ void endGame(int weighedScore) {
         }
     }
     
-    printf("It's been four years. Would you like to compete again?\nYes (0\nNo (1\n");
+    printf("It's been four years. Would you like to compete again?\nYes (0\nNo (1\nEnter: ");
     scanf("%d", &continueGame);
     
     if (continueGame == 0) {
@@ -152,7 +152,7 @@ void skating() {
 }
 
 void track() {
-    printf("You're crouched in a line beside the others, your number pinned to your chest. You should probably be standing still, but you can't help shifting from foot to foot--not out of nervousness, but restlessness. The photographers are turning dials on their cameras, turning up their Olympics-level shutterspeeds even higher for some of the fastest in the world. The horn goes off, and everything in your peripherals becomes a blur.\n");
+    printf("You're crouched in a line beside the others, your number pinned to your chest. You should probably be standing still, but you can't help shifting from foot to foot--not out of nervousness, but restlessness. The photographers are turning dials on their cameras, turning up their already Olympics-level shutterspeeds even higher. The horn goes off, and everything in your peripherals becomes a blur.\n");
     
 }
 void fencing() {
