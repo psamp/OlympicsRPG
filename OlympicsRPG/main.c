@@ -13,28 +13,56 @@ int scoreTiers[] = {33, 66, 99};
 
 int eventScore();
 int calcAbsoluteDifference(int, int);
-double calculateRawCompositeScore(int[], int);
-int calculateWeightedCompositeScore(double);
+double calculateAverageScore(int[], int);
+int calculateWeightedAverageScore(double);
+int indexOfSmallestArrayValue(int[], int arrSize);
 
 int main(int argc, const char * argv[]) {
     
-    return 0;
+    int rawScores[6];
     
+    for (int i = 0; i <= 6; i++) {
+        rawScores[i] = eventScore();
+    }
+    
+    double rawCompScore = calculateAverageScore(rawScores, 6);
+    
+    printf("raw score: %f\n", rawCompScore);
+    
+    printf("calculate weighted comp score: %d\n", calculateWeightedAverageScore(rawCompScore));
+    
+    return 0;
 }
 
 int eventScore() {
-    return scoreTiers[arc4random_uniform(2)];
+    return scoreTiers[arc4random_uniform(3)];
 }
 
 int calcAbsoluteDifference(int a, int b) {
     return abs(a - b);
 }
 
-double calculateRawCompositeScore(int scores[], int scoreSize) {
+int indexOfSmallestArrayValue(int arr[], int arrSize){
+    int minimum = arr[0];
+    
+    for (int i = 0; i < arrSize; i++) {
+        printf("minimum on %d: %d\n", i, minimum);
+        printf("array val: %d on %d\n", arr[i], i);
+        if (arr[i] < minimum) {
+            minimum = i;
+        }
+    }
+    
+    printf("idex of minimum arr val: %d\n", minimum);
+    
+    return minimum;
+}
+
+double calculateAverageScore(int scores[], int scoresSize) {
     
     double rtn = 0;
     
-    for (int i = 0; i<scoreSize; i++) {
+    for (int i = 0; i<scoresSize; i++) {
         rtn += scores[i];
     }
     
@@ -42,10 +70,17 @@ double calculateRawCompositeScore(int scores[], int scoreSize) {
 }
 
 
-int calculateWeightedCompositeScore(double rawCompositeScore) {
+int calculateWeightedAverageScore(double rawCompositeScore) {
     
-    int rtn = 0;
-    //numericalDistanceOfEachCompositeScoreFromScoreTiers[i] = rawCompositeScore;
-
-return rtn;
+    int differencesBetweenAverageScoreAndScoreTiers[3];
+    
+    for (int i = 0; i < 3; i++) {
+        differencesBetweenAverageScoreAndScoreTiers[i] = calcAbsoluteDifference(rawCompositeScore,scoreTiers[i]);
+        printf("differencesBetweenRawCompositeScoreAndScoreTiers[i]: %d\n", differencesBetweenAverageScoreAndScoreTiers[i]);
+    }
+    
+    int weightedCompositeScore = scoreTiers[indexOfSmallestArrayValue(differencesBetweenAverageScoreAndScoreTiers, 3)];
+    
+    
+    return weightedCompositeScore;
 }
