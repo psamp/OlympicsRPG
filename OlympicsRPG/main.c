@@ -14,6 +14,7 @@ int scoreTiers[] = {33, 66, 99};
 int events = 6;
 
 void newGame();
+void endGame();
 int generateRandomEventScore();
 int calcAbsoluteDifference(int, int);
 double calculateAverageScore(int);
@@ -30,17 +31,22 @@ void fencing();
 int main(int argc, const char * argv[]) {
     
     newGame();
+    
+    return 0;
 }
 
 void newGame() {
     
     int score = 0;
+    int eventCounter = 0;
     
-    bool running = true;
-    int option = -1;
+    char eventsList[] = "\nSwim (1\nGymnastics (bar) (2\nArchery (3\nSkating(4\nTrack (5\nFencing (6\n";
     
-    while (running) {
-        printf("\nSwim (1\nGymnastics (bar) (2\nArchery (3\nSkating(4\nTrack (5\nFencing (6\n");
+    while(eventCounter < 6) {
+        
+        int option = 0;
+        printf("%s", eventsList);
+        fpurge(stdin);
         scanf("%d", &option);
         
         switch (option) {
@@ -48,57 +54,83 @@ void newGame() {
                 
                 swimming();
                 score += generateRandomEventScore();
-                printf("YOUR SCORE IS: %d\n", score);
+                printf("YOUR RAW SCORE IS: %d\n", score);
                 
+                eventCounter++;
                 break;
             }
             case 2: {
                 gymnasticsBar();
                 score += generateRandomEventScore();
-                printf("YOUR SCORE IS: %d\n", score);
+                printf("YOUR RAW SCORE IS: %d\n", score);
                 
+                eventCounter++;
                 break;
             }
             case 3: {
                 archery();
                 score += generateRandomEventScore();
-                printf("YOUR SCORE IS: %d\n", score);
+                printf("YOUR RAW SCORE IS: %d\n", score);
+                
+                eventCounter++;
                 break;
             }
             case 4: {
                 skating();
                 score += generateRandomEventScore();
-                printf("YOUR SCORE IS: %d\n", score);
+                printf("YOUR RAW SCORE IS: %d\n", score);
                 
+                eventCounter++;
                 break;
             }
             case 5: {
                 track();
                 score += generateRandomEventScore();
-                printf("YOUR SCORE IS: %d\n", score);
+                printf("YOUR RAW SCORE IS: %d\n", score);
                 
+                eventCounter++;
                 break;
             }
             case 6: {
                 
                 fencing();
                 score += generateRandomEventScore();
-                printf("YOUR SCORE IS: %d\n", score);
+                printf("YOUR RAW SCORE IS: %d\n", score);
                 
+                eventCounter++;
                 break;
             }
                 
             default: {
-                printf("Not an event.");
+                printf("Invalid event number. Please choose from our list!\n");
                 break;
             }
         }
         
-        printf("ALL AROUND SCORE: %d\n", calculateWeightedAverageScore(calculateAverageScore(score)));
-        running = false;
-        
     }
     
+    endGame(calculateWeightedAverageScore(calculateAverageScore(score)));
+    
+}
+
+void endGame(int weighedScore) {
+    
+    int continueGame = 1;
+    
+    for (int i = 0; i < 3; i++) {
+        char *medals[3] = {"BRONZE","SILVER","GOLD"};
+        
+        if(weighedScore == scoreTiers[i]) {
+            printf("WITH YOUR AVERAGED AND WEIGHTED ALL-AROUND SCORE OF %d YOU HAVE EARNED A %s MEDAL!\n", weighedScore, medals[i]);
+        }
+    }
+    
+    printf("It's been four years. Would you like to compete again?\nYes (0\nNo (1\n");
+    scanf("%d", &continueGame);
+    
+    if (continueGame == 0) {
+        newGame();
+    }
 }
 
 void swimming() {
@@ -165,7 +197,6 @@ int calculateWeightedAverageScore(double rawAverageScore) {
     }
     
     int weightedAverageScore = scoreTiers[indexOfSmallestArrayValue(differencesBetweenAverageScoreAndScoreTiers, 3)];
-    
     
     return weightedAverageScore;
 }
